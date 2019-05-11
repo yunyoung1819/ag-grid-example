@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
 import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-enterprise';
 
 class App extends Component {
