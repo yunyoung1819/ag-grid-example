@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-enterprise';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       columnDefs: [{
-        headerName: "Make", field: "make", checkboxSelection: true
-      }, {
-        headerName: "Model", field: "model", sortable: true, filter: true
-      }, {
-        headerName: "Price", field: "price", sortable: true, filter: true
+        headerName: "Make", field: "make", rowGroup: true
+      },{
+        headerName: "Price", field: "price"
       }],
-     /* rowData : [{
-        make: "Toyota ", model: "Celica", price: 35000
-      }, {
-        make: "Ford", model: "Mondeo", price: 32000
-      }, {
-        make: "Porsche", model: "Boxter", price: 72000
-      }]*/
+      autoGroupColumnDef: {
+        headerName: "Model",
+        field: "model",
+        cellRenderer: 'agGroupCellRenderer',
+        cellRendererParams: {
+          checkbox: true
+        }
+      }
     }
   }
 
   componentDidMount() {
-    fetch('https://api.myjson.com/bins/15psn9')
+    fetch('https://api.myjson.com/bins/ly7d1')
         .then(result => result.json())
         .then(rowData => this.setState({rowData}))
   }
@@ -46,6 +46,8 @@ class App extends Component {
               onGridReady={ params => this.gridApi = params.api }
               rowSelection="multiple"
               columnDefs={this.state.columnDefs}
+              groupSelectsChildren={true}
+              autoGroupColumnDef={this.state.autoGroupColumnDef}
               rowData={this.state.rowData}>
           </AgGridReact>
         </div>
